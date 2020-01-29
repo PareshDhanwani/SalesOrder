@@ -1,0 +1,86 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:semantic="sap.m.semantic" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="poc2.Poc2.controller.View1" displayBlock="true">
+	<Shell id="shell">
+		<App id="app">
+			<SplitContainer>
+				<masterPages>
+					<semantic:MasterPage title="{i18n>masterTitle}">
+						<semantic:content>
+							<SearchField placeholder="Search" id="field1" liveChange="onSearch" showRefreshButton="true"/>
+							<List id="idList" items="{path : '/products', sorter : { path : 'group', group : true }}">
+								<items>
+									<ObjectListItem id="ol" title="{name}" press="onListItemPress" type="Active" number="{ path:'price',formatter: '.formatter.delivery'}" numberUnit="{currencycode}">
+									<attributes>
+											<ObjectAttribute text="{text}"/>
+										</attributes>
+									</ObjectListItem>
+								</items>
+							</List>
+						</semantic:content>
+					<semantic:customHeaderContent>
+					    <Button xmlns="sap.m" id="button2" icon="sap-icon://customer"/>
+					</semantic:customHeaderContent>
+					</semantic:MasterPage>
+				</masterPages>
+				<detailPages>
+					<semantic:DetailPage id="dp" title="{i18n>detailTitle}">
+						<ObjectHeader id="detailPage" title="{name}" number="{ parts:[{path:'price'},{path:'currencycode'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false} }" numberUnit="{currencycode}">
+							<statuses>
+								<ObjectStatus visible="false" text="Ordered: {orderon}" id="order"/>
+								<ObjectStatus visible="false" text="Requested: {requeston}" id="request"/>
+							</statuses>
+							<attributes>
+								<ObjectAttribute id="textAttribute" text="{text}"/>
+								<ObjectAttribute id="addressAttribute" text="{address}"/>
+							</attributes>
+						</ObjectHeader>
+						<Table id="idProductsTable" visible="false" items="{items}" class="sapUiResponsiveContentPadding">
+							<headerToolbar>
+								<OverflowToolbar>
+									<content>
+										<Title id="tableTitle" level="H2"/>
+										<ToolbarSpacer/>
+									</content>
+								</OverflowToolbar>
+							</headerToolbar>
+							<columns>
+								<Column width="12em">
+									<Text text="Item"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true">
+									<Text text="Quantity"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="true" hAlign="End">
+									<Text text="Your Price"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+									<Text text="Subtotal"/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem>
+									<cells>
+										<ObjectIdentifier title="{itemname}"/>
+										<Text text="{quantity} Piece"/>
+										<ObjectNumber id="yourprice" number="{ parts:[{path:'yourprice'},{path:'currencycode'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false} }" unit="{currencycode}"/>
+										<ObjectNumber id="subtotal" number="{ parts:[{path:'subtotal'},{path:'currencycode'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false} }" unit="{currencycode}"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+						<semantic:customFooterContent>
+							<Button text="Add To Cart" type="Emphasized"/>
+							<Button text="Checkout"/>
+						</semantic:customFooterContent>
+					
+					<semantic:customHeaderContent>
+					
+					    <Button xmlns="sap.m" id="button3" icon="sap-icon://cart"/>
+					
+					</semantic:customHeaderContent>
+					
+					</semantic:DetailPage>
+				</detailPages>
+			</SplitContainer>
+		</App>
+	</Shell>
+</mvc:View>
